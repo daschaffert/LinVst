@@ -35,7 +35,7 @@ Needs the affectx.h file from the Vst2 SDK to be placed in the projects folder.
 
 The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK https://www.steinberg.net/en/company/developers.html
 
-LinVst-Mac can be compiled for 64 bits.
+LinVst-Mac can be compiled for 64 bits systems ie Yosemite etc with more recent Xcode.
 
 
 
