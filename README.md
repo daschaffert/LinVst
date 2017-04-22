@@ -1,6 +1,10 @@
 LinVst-Mac
 
+------------
+
 LinVst for Mac.
+
+------------
 
 How To Use:
 
@@ -29,7 +33,7 @@ The lin-vst-server.so file needs o be built first before the Xcode project linvs
 
 Needs the affectx.h file from the Vst2 SDK to be placed in the projects folder.
 
-The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK.
+The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK https://www.steinberg.net/en/company/developers.html
 
 LinVst-Mac can be compiled for 64 bits.
 
