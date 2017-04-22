@@ -1,8 +1,8 @@
-LinVst-Mac
+# LinVst-Mac
 
 ------------
 
-LinVst for Mac.
+LinVst for the Mac.
 
 ------------
 
