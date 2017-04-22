@@ -37,5 +37,7 @@ The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK https:/
 
 LinVst-Mac can be compiled for 64 bits systems (Yosemite etc) with more recent Xcode versions.
 
+Wine and Wine development available from Macports, Fink, Homebrew.
+
 
 
