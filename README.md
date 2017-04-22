@@ -37,6 +37,10 @@ The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK https:/
 
 LinVst-Mac can be compiled for 64 bits systems (Yosemite etc) with more recent Xcode versions.
 
+Makefile and Xcode project need AMT to be defined.
+
+wineg++ uses -m32 for 32 bits and -m64 for 64 bits and also needs to be pointed to the right linking directory for 32 bits and 64 bits using -L/pathtolibs
+
 Wine and Wine development available from Macports, Fink, Homebrew https://wiki.winehq.org/MacOS
 
 
