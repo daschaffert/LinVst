@@ -17,7 +17,7 @@ for example
 	<key>wine-path</key>
 	<string>/opt/local/bin/wine</string>
 	
-The linvst.vst can be duplicated multiple times and have various windows vst dll files in their Resources folder.	
+The linvst.vst can be duplicated and renamed multiple times and have various windows vst dll files placed in their Resources folder, which makes it possible to use multiple windows vst's within Mac DAWs.	
 
 Tested with Wine 1.79 (Wineskin) on 32 bit 10.6.8 Snow Leopard with Reaper 5.
 
