@@ -5,7 +5,7 @@ CXX     = g++
 
 CXX_FLAGS =
 
-BUILD_FLAGS  = -fPIC -O2 $(CXX_FLAGS)
+BUILD_FLAGS  = -fPIC -O2 -DAMT $(CXX_FLAGS)
 
 LINK_FLAGS   = $(LDFLAGS)
 
