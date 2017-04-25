@@ -25,19 +25,24 @@ Tested with Wine 1.79 (Wineskin) on 32 bit 10.6.8 Snow Leopard with Reaper 5.
 
 To Make
 
-Xcode 3.2 project (using g++ 4.2) for 32 bit Osx 10.6.8, builds the linvst.vst vst.
+Makefilelinvstserver32 builds a 32 bit linvst server lin-vst-server.so
+Makefilelinvstserver64 builds a 64 bit linvst server lin-vst-server.so
 
-Makefile builds the lin-vst-server.so file.
+Makefilelinvst builds the linvst.vst vst.
 
-The lin-vst-server.so file needs o be built first before the Xcode project linvst.vst vst is built.
+The lin-vst-server.so file needs to be built first before the linvst.vst vst is built.
+
+make -f Makefilelinvstserver32 or make -f Makefilelinvstserver64
+
+unzip the linvst.vst file for use as a bundle template and then sudo make -f Makefilelinvst
+
+Needs wineg++ and g++ or equivalent.
 
 Needs the affectx.h file from the Vst2 SDK to be placed in the projects folder.
 
 The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK https://www.steinberg.net/en/company/developers.html
 
-LinVst-Mac can be compiled for 64 bits systems (Yosemite etc) with more recent Xcode versions.
-
-Makefile and Xcode project need AMT to be defined.
+LinVst-Mac can be compiled for 64 bits systems (Yosemite etc) with more recent Xcode/g++/wineg++ versions and more recent Wine 64 bit systems.
 
 wineg++ uses -m32 for 32 bits and -m64 for 64 bits and also needs to be pointed to the right linking directory for 32 bits and 64 bits using -L/pathtolibs
 
