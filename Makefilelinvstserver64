@@ -6,7 +6,7 @@ WINECXX = wineg++
 
 CXX_FLAGS =
 
-BUILD_FLAGS_WIN = -m64 -O2 -I/opt/local/include/wine/windows 
+BUILD_FLAGS_WIN = -m64 -O2 -DAMT -I/opt/local/include/wine/windows 
 LINK_FLAGS   = $(LDFLAGS)
 
 LINK_WINE   =  -lpthread  $(LINK_FLAGS)
