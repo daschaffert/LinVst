@@ -1,0 +1,46 @@
+#!/usr/bin/make -f
+# Makefile for LinVst #
+
+CXX     = g++
+
+CXX_FLAGS =
+
+BUILD_FLAGS  = -fPIC -O2 $(CXX_FLAGS)
+
+LINK_FLAGS   = $(LDFLAGS)
+
+LINK_PLUGIN = -bundle -o linvst.vst/Contents/MacOS/linvst -lpthread -ldl $(LINK_FLAGS)
+
+TARGETS     = linvst 
+
+LIBS =     -framework CoreServices
+
+
+# --------------------------------------------------------------
+
+all: $(TARGETS)
+
+linvst: linvst.unix.o remotevstclient.unix.o remotepluginclient.unix.o rdwrops.unix.o paths.unix.o
+	$(CXX) $^ $(LINK_PLUGIN) $(LIBS)
+	
+# --------------------------------------------------------------
+
+linvst.unix.o: linvst.cpp
+	$(CXX) $(BUILD_FLAGS) -c $^ -o $@
+	
+remotevstclient.unix.o: remotevstclient.cpp
+	$(CXX) $(BUILD_FLAGS) -c $^ -o $@
+	
+remotepluginclient.unix.o: remotepluginclient.cpp
+	$(CXX) $(BUILD_FLAGS) -c $^ -o $@
+
+rdwrops.unix.o: rdwrops.cpp
+	$(CXX) $(BUILD_FLAGS) -c $^ -o $@
+
+paths.unix.o: paths.cpp
+	$(CXX) $(BUILD_FLAGS) -c $^ -o $@
+
+clean:
+	rm -fR *.o *.vst $(TARGETS)
+
+install:
