@@ -28,9 +28,9 @@ To Make
 Makefilelinvstserver32 builds a 32 bit linvst server lin-vst-server.so
 Makefilelinvstserver64 builds a 64 bit linvst server lin-vst-server.so
 
-Makefilelinvst builds the linvst.vst vst.
+Makefilelinvst builds the linvst.vst vst bundle.
 
-The lin-vst-server.so file needs to be built first before the linvst.vst vst is built.
+The lin-vst-server.so file needs to be placed in the linvst.vst Resources folder after the linvst.vst bundle is built.
 
 make -f Makefilelinvstserver32 or make -f Makefilelinvstserver64
 
