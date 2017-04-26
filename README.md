@@ -38,15 +38,29 @@ unzip the linvst.vst file for use as a bundle template and then sudo make -f Mak
 
 Needs wineg++ and g++ or equivalent.
 
-Needs the affectx.h file from the Vst2 SDK to be placed in the projects folder.
+Needs the aeffect.h and affectx.h file from the Vst2 SDK to be placed in the projects folder.
+
+aeffect.h needs 
+
+#if (defined(__GNUC__) && defined(__MACH__) && defined(__WINE__))
+#undef TARGET_API_MAC_CARBON
+#endif
+
+placed just before the #if TARGET_API_MAC_CARBON line to build.
 
 The Vst2 SDK is available from Steinberg and is included in the Vst3 SDK https://www.steinberg.net/en/company/developers.html
 
 LinVst-Mac can be compiled for 64 bits systems (Yosemite etc) with more recent Xcode/g++/wineg++ versions and more recent Wine 64 bit systems.
 
-wineg++ uses -m32 for 32 bits and -m64 for 64 bits and also needs to be pointed to the right linking directory for 32 bits and 64 bits using -L/pathtolibs
+wineg++ uses -m32 for 32 bits and -m64 for 64 bits and also needs to be pointed to the right wine linking directory for 32 bits and 64 bits using -L/pathtolibs
 
-Wine and Wine development available from Macports, Fink, Homebrew https://wiki.winehq.org/MacOS
+The Wineskin bundle uses /lib for 32 bit wine libraries and lib64 for 64 bit wine libraries and copying the Wineskin bundle libraries to /opt/local might be a good idea.
+
+wineg++ and winegcc and winecpp and winebuild need to be from an earlier wine build (or other workaround) otherwise there can be Xcode/gnu libc++ libstdc++ linking/include confusion https://github.com/LMMS/lmms/issues/698
+
+gcc is available from Macports, Fink, Homebrew https://wiki.winehq.org/MacOS
+
+64 bit and 32 bit development needs sudo port install gcc6 +universal
 
 
 
