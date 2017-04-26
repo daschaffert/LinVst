@@ -42,7 +42,7 @@ Needs the aeffect.h and affectx.h file from the Vst2 SDK to be placed in the pro
 
 aeffect.h needs 
 
-"#if (defined(__GNUC__) && defined(__MACH__) && defined(__WINE__))"
+<PRE><code>"#if (defined(__GNUC__) && defined(__MACH__) && defined(__WINE__))"</code></PRE>
 #undef TARGET_API_MAC_CARBON
 #endif
 
