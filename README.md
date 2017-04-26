@@ -54,7 +54,9 @@ LinVst-Mac can be compiled for 64 bits systems (Yosemite etc) with more recent X
 
 wineg++ uses -m32 for 32 bits and -m64 for 64 bits and also needs to be pointed to the right wine linking directory for 32 bits and 64 bits using -L/pathtolibs
 
-The Wineskin bundle uses /lib for 32 bit wine libraries and lib64 for 64 bit wine libraries and copying the Wineskin bundle libraries to /opt/local might be a good idea.
+The Wineskin 64 bit Wine bundle uses lib for 32 bit wine libraries and lib64 for 64 bit wine libraries, copy the Wineskin bundle folders (bin, lib, lib64, share) to /opt/local.
+
+For example, use -L/opt/local/lib64 -L/opt/local/lib64/wine to link to the wine 64 bit libs and -I/opt/local/include/wine/windows for the headers.
 
 wineg++ and winegcc and winecpp and winebuild need to be from an earlier wine build (or other workaround) otherwise there can be Xcode/gnu libc++ libstdc++ linking/include confusion https://github.com/LMMS/lmms/issues/698
 
