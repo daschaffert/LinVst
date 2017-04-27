@@ -165,6 +165,8 @@ RemoteVSTClient::RemoteVSTClient(audioMasterCallback theMaster) :
 
   ptr3 = (unsigned short *)&buffer[0];
   
+  dlltype = 0;
+	    
   if (*ptr3 == 0x8664)
   dlltype = 1;
   else if (*ptr3 == 0x014c)
@@ -214,11 +216,6 @@ RemoteVSTClient::RemoteVSTClient(audioMasterCallback theMaster) :
 				const char *c_wine_path = CFStringGetCStringPtr(wine_path, NULL);	
 
 				std::cerr << "RemoteVSTClient: executing " << c_server_path << "\n";
-
-				// if no dispaly environment guess...
-				// setenv("DISPLAY", ":0", 0);
-	
-			//	setenv("DYLD_FALLBACK_LIBRARY_PATH", "/usr/X11/lib:/usr/lib", 0);
 				
 				if ((child = fork()) < 0) {
 	                     m_runok = 1;
