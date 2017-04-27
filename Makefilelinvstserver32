@@ -11,14 +11,14 @@ LINK_FLAGS   = $(LDFLAGS)
 
 LINK_WINE   =  -lpthread  $(LINK_FLAGS)
 
-TARGETS     = lin-vst-server.exe
+TARGETS     = lin-vst-server32.exe
 
 # --------------------------------------------------------------
 
 all: $(TARGETS)
 	
-lin-vst-server.exe: lin-vst-server.wine.o remotepluginserver.wine.o rdwrops.wine.o paths.wine.o
-	$(WINECXX) -m32 -L/opt/local/lib64 -L/opt/local/lib64/wine $^ $(LINK_WINE) -o $@
+lin-vst-server32.exe: lin-vst-server.wine.o remotepluginserver.wine.o rdwrops.wine.o paths.wine.o
+	$(WINECXX) -m32 -L/opt/local/lib -L/opt/local/lib/wine $^ $(LINK_WINE) -o $@
 
 # --------------------------------------------------------------
 
