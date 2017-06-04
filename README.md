@@ -30,4 +30,10 @@ linvst*convert can do the conversion automatically for multiple plugins.
 
 -----------
 
+Window embedded version works in Linux Reaper and Linux Bitwig.
+
+Standalone Window version works in Tracktion.
+
+-----------
+
 The lsp vst plugins need the lsp-plugins-vst-core.so file copied to /usr/lib/vst for plugin scanning to be successful.
