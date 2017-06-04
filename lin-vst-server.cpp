@@ -290,12 +290,10 @@ RemoteVSTServer::~RemoteVSTServer()
 
 	m_plugin->dispatcher(m_plugin, effEditClose, 0, 0, 0, 0);
 
-
 #ifndef EMBED
  XDestroyWindow (x11_dpy, x11_win);
-#endif
-
 XCloseDisplay(x11_dpy);
+#endif
 
 x11_dpy = 0;
 
@@ -535,90 +533,35 @@ int height;
 
    tryRead(m_controlRequestFd, &winm, sizeof(winm));
 
-    x11_dpy = 0;
-
-    x11_dpy = XOpenDisplay(0);
-
-    if(x11_dpy == 0)
-    {
-    winm.handle = 0;
-    winm.width = 0;
-    winm.height = 0;
-    guiVisible = false;
-    tryWrite(m_controlResponseFd, &winm, sizeof(winm));
-
-    return;       
-    }
 
     x11_win = winm.handle;
 
 
-    XMapWindow(x11_dpy, x11_win);
-
-    XFlush(x11_dpy);
- 
-    XSelectInput(x11_dpy, x11_win, SubstructureNotifyMask | ButtonPressMask | ButtonReleaseMask
-                 | ButtonMotionMask | ExposureMask | KeyPressMask);
-
-    m_plugin->dispatcher(m_plugin, effEditGetRect, 0, 0, &eRect, 0);
-
-    m_plugin->dispatcher(m_plugin, effEditOpen, 0, (VstIntPtr) x11_dpy, (void *) x11_win, 0);
+m_plugin->dispatcher(m_plugin, effEditOpen, 0, 0, (void *) x11_win, 0);
  
     m_plugin->dispatcher(m_plugin, effEditGetRect, 0, 0, &eRect, 0);
  
-    if (eRect) {
+  
         width = eRect->right - eRect->left;
         height = eRect->bottom - eRect->top;
         
-        if((width == 0) || (height == 0))
-        {
-        
-        XCloseDisplay(x11_dpy);
-
-        x11_dpy = 0;
-
-     winm.handle = 0;
-    winm.width = 0;
-    winm.height = 0;
-    guiVisible = false;
-    tryWrite(m_controlResponseFd, &winm, sizeof(winm));
-    
-        return;
-        }
-        
-       XResizeWindow(x11_dpy, x11_win, width, height);
-
-    winm.handle = 0;
-    winm.width = width;
+     winm.width = width;
     winm.height = height;
 
-        
-        }
-        else
-        {
-     
-        XCloseDisplay(x11_dpy);
-  
+   if((width <= 0) && (height <= 0))
+    {
     winm.handle = 0;
     winm.width = 0;
     winm.height = 0;
-    guiVisible = false;
-    tryWrite(m_controlResponseFd, &winm, sizeof(winm));
-        return;
-          
-        }
 
-   XFlush(x11_dpy);
-
-   XSync(x11_dpy, false);
-
+    guiVisible = false; 
+    }
+   else
    guiVisible = true;
 
     tryWrite(m_controlResponseFd, &winm, sizeof(winm));
         return;
-
-
-
+	
 #else
 
     if(haveGui == false)
@@ -746,10 +689,6 @@ RemoteVSTServer::hideGUI()
 
 m_plugin->dispatcher(m_plugin, effEditClose, 0, 0, 0, 0);
 
-XCloseDisplay(x11_dpy);
-
-x11_dpy = 0;
-x11_win = 0;
 
 #else
 
