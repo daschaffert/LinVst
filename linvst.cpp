@@ -115,12 +115,17 @@ static ERect retRect = {0,0,200,500};
                 plugin->showGUI();
 
 
+if((plugin->winm.width != 0) && (plugin->winm.height != 0))
+{
+
  ERect *rp = &retRect;
 
  rp->bottom = plugin->winm.height;
  rp->top = 0;
  rp->right = plugin->winm.width;
  rp->left = 0;
+
+}
 
 }
                 #else       
