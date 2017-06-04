@@ -16,7 +16,7 @@ For example,
 
 For a linux vst plugin named Delay.so, linvst*.so would get renamed to Delay*.so
 
-The plugin name with an asterisk in it's name would then be used inside of a Linux DAW instead of the original plugin name.
+The plugin name with an asterisk contained in it's name would then be used inside of a Linux DAW instead of the original plugin name.
 
 For instance, Delay*.so would then be used inside of a Linux DAW (not the original Delay.so)
 
@@ -26,9 +26,11 @@ To install,
 
 Copy lin-vst-server to /usr/bin
 
-convert(rename) linvst*.so to the pluginname.
+convert(rename) linvst*.so to the plugin name.
 
-linvst*convert can do the conversion automatically for multiple plugins.
+linvst*convert can do the name conversion automatically for multiple plugins in a folder.
+
+64 bit Linux vst's only.
 
 -----------
 
