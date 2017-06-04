@@ -2,9 +2,9 @@
 
 -----
 
-LinVst* may help with some Linux vst incompatability problems, such as gtk errors etc
+LinVst* may help with some Linux vst incompatability problems that occur in some Linux DAWS, such as gtk errors that occur in some Linux vst plugins (lsp vst plugins/amsynth vst plugin etc).
 
-LinVst* loads a Linux vst and manages it within a DAW.
+LinVst* loads a Linux vst and manages it within a Linux DAW.
 
 -------
 
@@ -30,9 +30,9 @@ linvst*convert can do the conversion automatically for multiple plugins.
 
 -----------
 
-Window embedded version works in Linux Reaper and Linux Bitwig.
+The window embedded version works in Linux Reaper and Linux Bitwig.
 
-Standalone Window version works in Tracktion.
+The standalone window version works in Tracktion.
 
 -----------
 
