@@ -16,7 +16,9 @@ For example,
 
 For a linux vst plugin named Delay.so, linvst*.so would get renamed to Delay*.so
 
-Delay*.so would then be used inside a Linux DAW (not Delay.so)
+The plugin name with an asterisk in it's name would then be used inside of a Linux DAW instead of the original plugin name.
+
+For instance, Delay*.so would then be used inside of a Linux DAW (not the original Delay.so)
 
 Delay.so and Delay*.so need to be kept in the same location after the renaming as they are then a matched pair.
 
@@ -39,6 +41,12 @@ LinVst-lx2.zip and LinVst-lx2embed.zip contain binaries.
 The pluginterfaces folder from the Steinberg vst sdk is needed for compiling.
 
 The x11-dev package is also needed for compiling.
+
+sudo make clean
+
+make
+
+sudo make install
 
 -----------
 
