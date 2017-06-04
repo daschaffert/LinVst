@@ -34,6 +34,12 @@ The window embedded version works in Linux Reaper and Linux Bitwig.
 
 The standalone window version works in Tracktion.
 
+LinVst-lx2.zip and LinVst-lx2embed.zip contain binaries.
+
+The pluginterfaces folder from the Steinberg vst sdk is needed for compiling.
+
+The x11-dev package is also needed for compiling.
+
 -----------
 
 The lsp vst plugins need the lsp-plugins-vst-core.so file copied to /usr/lib/vst for plugin scanning to be successful.
