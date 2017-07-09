@@ -39,6 +39,7 @@
 #include <time.h>
 
 #include <sched.h>
+#include <sys/mman.h>
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -332,7 +333,8 @@ void RemoteVSTServer::EffectOpen()
     m_plugin->dispatcher(m_plugin, effGetEffectName, 0, 0, buffer, 0);
     if (debugLevel > 0)
         cerr << "dssi-vst-server[1]: plugin name is \"" << buffer << "\"" << endl;
-    if (buffer[0]) m_name = buffer;
+    if (buffer[0])
+        m_name = buffer;
 
 /*
     if (strncmp(buffer, "Guitar Rig 5", 12) == 0)
@@ -345,7 +347,8 @@ void RemoteVSTServer::EffectOpen()
     m_plugin->dispatcher(m_plugin, effGetVendorString, 0, 0, buffer, 0);
     if (debugLevel > 0)
         cerr << "dssi-vst-server[1]: vendor string is \"" << buffer << "\"" << endl;
-    if (buffer[0]) m_maker = buffer;
+    if (buffer[0])
+        m_maker = buffer;
 
 /*
     if (strncmp(buffer, "IK", 2) == 0)
@@ -403,9 +406,11 @@ void RemoteVSTServer::effDoVoid(int opcode)
 #ifdef AMT
         finish = 9999;
         if (m_shm3)
-        writeInt(m_AMResponseFd, finish);
+        {
+            writeInt(m_AMResponseFd, finish);
+            getWriteSchedInfo(m_AMResponseFd);
+        }
 #endif
-
         writeInt(m_controlResponseFd, 1);
         // usleep(500000);
         terminate();
@@ -832,6 +837,7 @@ long VSTCALLBACK hostCallback(AEffect *plugin, long opcode, long index, long val
         if (alive && !exiting && remoteVSTServerInstance->m_shm3 && (bufferSize > 0))
         {
             writeInt(remoteVSTServerInstance->m_AMResponseFd, opcode);
+            getWriteSchedInfo(remoteVSTServerInstance->m_AMResponseFd);
             writeInt(remoteVSTServerInstance->m_AMResponseFd, value);
             tryRead(remoteVSTServerInstance->m_AMRequestFd, &timeInfo, sizeof(timeInfo));
             // printf("%f\n", timeInfo.sampleRate);
@@ -881,6 +887,7 @@ long VSTCALLBACK hostCallback(AEffect *plugin, long opcode, long index, long val
                 *ptr2 = eventnum;
 
                 writeInt(remoteVSTServerInstance->m_AMResponseFd, opcode);
+                getWriteSchedInfo(remoteVSTServerInstance->m_AMResponseFd);
                 writeInt(remoteVSTServerInstance->m_AMResponseFd, value);
                 ok = readInt(remoteVSTServerInstance->m_AMRequestFd);
             }
@@ -917,38 +924,39 @@ long VSTCALLBACK hostCallback(AEffect *plugin, long opcode, long index, long val
             cerr << "dssi-vst-server[2]: audioMasterIOChanged requested" << endl;
 
 #ifdef AMT
-    struct amessage
-    {
-        int flags;
-        int pcount;
-        int parcount;
-        int incount;
-        int outcount;
-        int delay;
-    } am;
+        struct amessage
+        {
+            int flags;
+            int pcount;
+            int parcount;
+            int incount;
+            int outcount;
+            int delay;
+        } am;
 
-    if (alive && !exiting && remoteVSTServerInstance->m_shm3  && (bufferSize > 0))
-    {
-        am.flags = plugin->flags;
-        am.pcount = plugin->numPrograms;
-        am.parcount = plugin->numParams;
-        am.incount = plugin->numInputs;
-        am.outcount = plugin->numOutputs;
-        am.delay = plugin->initialDelay;
-        am.flags &= ~effFlagsCanDoubleReplacing;
-        writeInt(remoteVSTServerInstance->m_AMResponseFd, opcode);
-        tryWrite(remoteVSTServerInstance->m_AMResponseFd, &am, sizeof(am));
-        int ok2 = readInt(remoteVSTServerInstance->m_AMRequestFd);
+        if (alive && !exiting && remoteVSTServerInstance->m_shm3  && (bufferSize > 0))
+        {
+            am.flags = plugin->flags;
+            am.pcount = plugin->numPrograms;
+            am.parcount = plugin->numParams;
+            am.incount = plugin->numInputs;
+            am.outcount = plugin->numOutputs;
+            am.delay = plugin->initialDelay;
+            am.flags &= ~effFlagsCanDoubleReplacing;
+            writeInt(remoteVSTServerInstance->m_AMResponseFd, opcode);
+            getWriteSchedInfo(remoteVSTServerInstance->m_AMResponseFd);
+            tryWrite(remoteVSTServerInstance->m_AMResponseFd, &am, sizeof(am));
+            int ok2 = readInt(remoteVSTServerInstance->m_AMRequestFd);
 /*
-        AEffect* update = remoteVSTServerInstance->m_plugin;
-        update->flags = am.flags;
-        update->numPrograms = am.pcount;
-        update->numParams = am.parcount;
-        update->numInputs = am.incount;
-        update->numOutputs = am.outcount;
-        update->initialDelay = am.delay;
+            AEffect* update = remoteVSTServerInstance->m_plugin;
+            update->flags = am.flags;
+            update->numPrograms = am.pcount;
+            update->numParams = am.parcount;
+            update->numInputs = am.incount;
+            update->numOutputs = am.outcount;
+            update->initialDelay = am.delay;
 */
-    }
+        }
 #endif
         break;
 
@@ -1192,6 +1200,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR cmdline, int cmds
 
     cout << "DSSI VST plugin server v" << RemotePluginVersion << endl;
     cout << "Copyright (c) 2004-2006 Chris Cannam" << endl;
+
+    mlockall(MCL_CURRENT | MCL_FUTURE);
 
     if (cmdline)
     {
